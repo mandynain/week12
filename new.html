@@ -1,33 +1,38 @@
+<!DOCTYPE html>
+<html>
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ajax</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script language="javascript">
+        var XHobj=false;
+        if(window.XMLHttpRequest){
+            //code for IE6,IE5,Google chrome, Firefox, Web Browser
+            XHobj=new XMLHttpRequest();
+        }
+        else {
+            XHobj=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        
+        function fetchdata(datasource,divID){
+            if(XHobj){
+                XHobj.open("GET",datasource);
+                XHobj.onreadystatechange=function(){
+                    if(XHobj.readyState==4 && XHobj.status==200)
+                    document.getElementById(divID).innerHTML+=XHobj.responseText;
+                }    
+                XHobj.send();
+            }
+        }
+           
+    </script>
 </head>
 <body>
-<p>mca exam</p>
-<p id ="block2">result</p>
-<button id ="pressme">Presss me</button>
-<script type ="text/javascript">
-var pElems = document.getElementByTagname("p");
-for(var i=0;i<pElems.length ; i++)
-{
-pElems[i].addEventListener("mouseover",handleMouseOver);
-pElems[i].addEventListener("mouseout",handleMouseOut);
-
-}
-document.getElementById("pressme").onclick=function()
-{
-document.getElementById("block2").removeEventListener("mouseout",handleMouseOut);
-}
-function handleMouseOver(e)
-{
-e.target.innerHTML +="2016";
-e.target.style.background='white';
-e.target.style.color='black';
-}
-function  handleMouseOut(e)
-{
-e.target.innerjQueryAJAXEventsHTML +="result";
-e.target.style.removeProperty('color');
-e.target.style.removeProperty('background');
-}
-</script>
+    <h3>Welcome to AJAX</h3>
+    <form>
+        <input type="button" value="Fetch Message" onclick="fetchdata('info.txt','myDiv')" />
+    </form>
+    <div id="myDiv"><b>AJAX applications are browser and platform independent.:</b></div>
 </body>
 </html>
